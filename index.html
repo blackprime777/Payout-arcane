@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b14">
+<title>Wanheda | Trader Portal</title>
+
+<style>
+:root {
+  --bg:#080b14;
+  --panel:#101522;
+  --panel2:#151c2b;
+  --border:#202b3e;
+  --gold:#e8ad56;
+  --green:#20d5a0;
+  --red:#fa6679;
+  --purple:#a77bff;
+  --text:#f4f5fa;
+  --muted:#929bad;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+header{
+  height:78px;
+  padding:0 5%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:#090d17;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+.brand{font-size:19px;font-weight:800;letter-spacing:1px}
+.brand span{color:var(--gold)}
+.header-right{display:flex;align-items:center;gap:12px}
+.status{
+  background:#142d29;
+  color:var(--green);
+  padding:7px 12px;
+  border-radius:20px;
+  font-size:11px;
+}
+.logout{
+  background:transparent;
+  border:1px solid var(--border);
+  color:white;
+  padding:9px 13px;
+  border-radius:8px;
+}
+.container{width:92%;max-width:1150px;margin:auto}
+.login-wrap{
+  min-height:calc(100vh - 78px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px 0;
+}
+.login-card{
+  width:100%;
+  max-width:470px;
+  padding:35px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:22px;
+}
+.eyebrow{
+  color:var(--gold);
+  letter-spacing:3px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:16px;
+}
+h1{font-size:32px;margin-bottom:12px}
+.sub{color:var(--muted);line-height:1.6;font-size:14px}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  margin:20px 0 9px;
+}
+input,select{
+  width:100%;
+  background:#090e18;
+  color:white;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  outline:none;
+}
+input:focus,select:focus{border-color:var(--gold)}
+.primary{
+  background:linear-gradient(110deg,#dba34c,#a96d2b);
+  border:0;
+  color:#17100a;
+  width:100%;
+  padding:15px;
+  border-radius:10px;
+  font-weight:800;
+  margin-top:22px;
+}
+.error{color:var(--red);font-size:13px;margin-top:12px}
+.dashboard{padding:28px 0 70px}
+.welcome{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+  margin:15px 0 25px;
+}
+.welcome h1{font-size:27px}
+.small{font-size:12px;color:var(--muted)}
+.wallet-select{
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:13px 16px;
+  border-radius:10px;
+  color:white;
+  min-width:200px;
+}
+.notice{
+  background:#181a21;
+  border:1px solid #5b452a;
+  color:#d6b98d;
+  padding:13px 15px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.6;
+  margin-bottom:20px;
+}
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:30px 0 17px;
+}
+.section-head h2{font-size:20px}
+.gold{color:var(--gold)}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:13px;
+}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+  min-height:125px;
+}
+.stat-title{
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:1px;
+}
+.stat-value{
+  font-size:26px;
+  font-weight:bold;
+  margin-top:12px;
+  overflow-wrap:anywhere;
+}
+.green{color:var(--green)}
+.red{color:var(--red)}
+.stat-note{font-size:11px;color:var(--muted);margin-top:7px}
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+  margin-top:18px;
+}
+.filters{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:15px;
+}
+.filter{
+  background:#171f2e;
+  border:1px solid var(--border);
+  color:var(--muted);
+  border-radius:20px;
+  padding:9px 14px;
+  font-size:12px;
+}
+.filter.active{color:var(--gold);border-color:#70522f}
+.market-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  padding:20px 5px;
+  border-bottom:1px solid var(--border);
+}
+.market-row:last-child{border:0}
+.market-name{font-weight:bold}
+.nil{color:var(--muted);font-size:12px}
+.coming{
+  text-align:center;
+  padding:65px 20px;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+.coming h2{font-size:30px;color:var(--gold);margin-bottom:10px}
+.payout-btn{
+  background:linear-gradient(110deg,#dba34c,#a96d2b);
+  color:#17100a;
+  font-weight:bold;
+  border:0;
+  padding:13px 19px;
+  border-radius:10px;
+}
+.payout-wrap{
+  max-width:600px;
+  margin:40px auto;
+}
+.payout-card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:28px;
+}
+.success{
+  text-align:center;
+  padding:35px 15px;
+}
+.success-icon{font-size:48px;margin-bottom:15px}
+.success h2{font-size:27px;margin-bottom:12px}
+.success p{color:var(--muted);line-height:1.7}
+footer{
+  border-top:1px solid var(--border);
+  text-align:center;
+  padding:30px 15px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.8;
+}
+@media(min-width:700px){
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:480px){
+  .login-card{padding:25px}
+  h1{font-size:27px}
+  .stat-value{font-size:22px}
+  header{padding:0 4%}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">WANHEDA <span>PORTAL</span></div>
+  <div class="header-right">
+    <span class="status" id="headerStatus">MEMBERS ONLY</span>
+    <button class="logout hidden" id="logoutBtn" onclick="logout()">Exit</button>
+  </div>
+</header>
+
+<!-- LOGIN -->
+
+<section id="loginScreen" class="login-wrap">
+  <div class="login-card">
+
+    <div class="eyebrow">PRIVATE MEMBER ACCESS</div>
+    <h1>Welcome back.</h1>
+    <p class="sub">
+      Access the Wanheda community trading portal.
+      Enter your registration details to continue.
+    </p>
+
+    <form id="loginForm">
+
+      <label>Full name</label>
+      <input id="loginName" placeholder="Enter your full name" required>
+
+      <label>Email address</label>
+      <input id="loginEmail" type="email" placeholder="Email address" required>
+
+      <label>Invitation code</label>
+      <input id="inviteCode" type="password" placeholder="Invitation code" required>
+
+      <button class="primary">ACCESS PORTAL →</button>
+      <p id="loginError" class="error"></p>
+
+    </form>
+
+    <p class="small" style="margin-top:25px">
+      Restricted access · Wanheda community
+    </p>
+
+  </div>
+</section>
+
+<!-- WALLET VERIFICATION -->
+
+<section id="walletScreen" class="login-wrap hidden">
+  <div class="login-card">
+
+    <div class="eyebrow">MEMBER VERIFICATION</div>
+    <h1>Select your event.</h1>
+    <p class="sub">Choose the community account you are registered with.</p>
+
+    <label>Event wallet</label>
+    <select id="walletChoice">
+      <option value="2026">Wanheda 2026</option>
+      <option value="2027">Wanheda 2027</option>
+    </select>
+
+    <label>Member ID</label>
+    <input id="memberCode" placeholder="Enter your member ID">
+
+    <button class="primary" onclick="verifyMember()">CONTINUE →</button>
+    <p id="memberError" class="error"></p>
+
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+
+<main id="dashboardScreen" class="hidden">
+<div class="container dashboard">
+
+  <div class="welcome">
+    <div>
+      <div class="eyebrow">MEMBER DASHBOARD</div>
+      <h1>Welcome, <span id="displayName" class="gold"></span></h1>
+      <p class="small" id="walletLabel">Wanheda 2026</p>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <select class="wallet-select" id="switchWallet" onchange="switchEvent()">
+        <option value="2026">Wanheda 2026</option>
+        <option value="2027">Wanheda 2027</option>
+      </select>
+      <button class="payout-btn" onclick="openPayout()">REQUEST PAYOUT</button>
+    </div>
+  </div>
+
+  <div class="notice" id="dashboardNotice">
+    Dashboard figures are illustrative and have not been independently
+    verified against broker records. Contact administration for
+    official account statements and confirmations.
+  </div>
+
+  <!-- 2026 -->
+
+  <section id="event2026">
+
+    <div class="section-head">
+      <h2>Account Overview</h2>
+      <span class="small">WANHEDA 2026</span>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-title">DISPLAYED BALANCE</div>
+        <div class="stat-value gold" id="balanceDisplay">$2,558,822.00</div>
+        <div class="stat-note">Illustrative figure · Not verified</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">WIN RATE</div>
+        <div class="stat-value green">80%</div>
+        <div class="stat-note">Illustrative statistic</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">TOTAL TRADES</div>
+        <div class="stat-value">900</div>
+        <div class="stat-note">Sample dashboard figure</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">TOTAL P&L</div>
+        <div class="stat-value green">Not verified</div>
+        <div class="stat-note">No broker P&L imported</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">BEST TRADE</div>
+        <div class="stat-value green">$300,000</div>
+        <div class="stat-note">Illustrative figure</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">WORST TRADE</div>
+        <div class="stat-value red">-$100,000</div>
+        <div class="stat-note">Illustrative figure</div>
+      </div>
+
+    </div>
+
+    <div class="section-head">
+      <h2>Trade History</h2>
+      <span class="small">BROKER HISTORY</span>
+    </div>
+
+    <div class="card">
+
+      <p class="small">
+        No live broker history has been imported.
+        The instruments below are placeholders.
+      </p>
+
+      <div class="market-row">
+        <div>
+          <div class="market-name gold">XAU-USD</div>
+          <div class="nil">Gold / US Dollar</div>
+        </div>
+        <span class="nil">NIL</span>
+      </div>
+
+      <div class="market-row">
+        <div>
+          <div class="market-name gold">XAG-USD</div>
+          <div class="nil">Silver / US Dollar</div>
+        </div>
+        <span class="nil">NIL</span>
+      </div>
+
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>Account Activity</h2>
+        <span class="small">NO LIVE IMPORT</span>
+      </div>
+      <p class="small">
+        Broker connection: Not connected<br>
+        Recent broker history: Not imported<br>
+        Account statement: Awaiting verification
+      </p>
+    </div>
+
+  </section>
+
+  <!-- 2027 -->
+
+  <section id="event2027" class="hidden">
+
+    <div class="section-head">
+      <h2>Account Overview</h2>
+      <span class="small">WANHEDA 2027</span>
+    </div>
+
+    <div class="stats">
+
+      <div class="stat">
+        <div class="stat-title">DISPLAYED ACCOUNT FIGURE</div>
+        <div class="stat-value gold">$30,000</div>
+        <div class="stat-note">Unverified reference figure</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">TRADING STATUS</div>
+        <div class="stat-value gold">COMING SOON</div>
+        <div class="stat-note">Event not started</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-title">BROKER HISTORY</div>
+        <div class="stat-value">—</div>
+        <div class="stat-note">Not available</div>
+      </div>
+
+    </div>
+
+    <div class="coming" style="margin-top:25px">
+      <div class="eyebrow">WANHEDA / 2027</div>
+      <h2>COMING SOON</h2>
+      <p class="sub">
+        The next phase of the Wanheda community trading event
+        is currently being prepared.
+      </p>
+    </div>
+
+  </section>
+
+</div>
+</main>
+
+<!-- PAYOUT REQUEST -->
+
+<section id="payoutScreen" class="hidden">
+  <div class="container payout-wrap">
+
+    <div class="payout-card" id="payoutFormCard">
+
+      <div class="eyebrow">MEMBER SERVICES</div>
+      <h1>Request Payout</h1>
+
+      <p class="sub">
+        Submit your withdrawal details for administrative review.
+      </p>
+
+      <form id="payoutForm">
+
+        <label>Full name</label>
+        <input id="payoutName" required>
+
+        <label>Email address</label>
+        <input id="payoutEmail" type="email" required>
+
+        <label>Member ID</label>
+        <input id="payoutMember" required>
+
+        <label>Participant ID</label>
+        <input id="participantId" value="dls500" required>
+
+        <label>Withdrawal amount (USD)</label>
+        <input id="payoutAmount" type="number" min="100" max="30000" step="0.01"
+        placeholder="100 - 30,000" required>
+
+        <label>Withdrawal method</label>
+        <select id="withdrawalMethod" required>
+          <option value="">Select withdrawal method</option>
+          <option value="Solana">Solana</option>
+          <option value="Monero">Monero</option>
+        </select>
+
+        <label>Wallet address</label>
+        <input id="withdrawalAddress"
+        placeholder="Paste your receiving wallet address" required>
+
+        <div class="notice">
+          Your request will be submitted for manual review.
+          Submission does not confirm available funds,
+          approve a withdrawal or guarantee a payment date.
+        </div>
+
+        <button class="primary">SUBMIT PAYOUT REQUEST →</button>
+
+        <p id="payoutError" class="error"></p>
+
+      </form>
+
+      <button class="logout" style="width:100%;margin-top:15px"
+      onclick="closePayout()">BACK TO DASHBOARD</button>
+
+    </div>
+
+    <div class="payout-card hidden" id="successCard">
+
+      <div class="success">
+        <div class="success-icon">🎊</div>
+
+        <div class="eyebrow">REQUEST RECEIVED</div>
+
+        <h2>Congratulations, <span id="successName" class="gold"></span>!</h2>
+
+        <p>
+          Your payout request for
+          <strong class="gold" id="successAmount"></strong>
+          has been successfully submitted.
+        </p>
+
+        <p style="margin-top:15px">
+          Withdrawal method:
+          <strong id="successMethod"></strong>
+        </p>
+
+        <p style="margin-top:18px">
+          Your request is pending administrative review.
+          The payment timeline will be confirmed after
+          verification and approval.
+        </p>
+
+        <button class="primary" onclick="closePayout()">
+          RETURN TO DASHBOARD
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <strong>WANHEDA COMMUNITY PORTAL</strong>
+  <br>
+  Private member access · Arcane Intelligence
+  <br><br>
+  This static portal does not connect to a live broker,
+  hold funds, verify account balances or process withdrawals.
+  Displayed figures are illustrative unless independently verified.
+  Payout requests are not proof of available funds or payment approval.
+  <br><br>
+  © 2026 Wanheda. All rights reserved.
+</footer>
+
+<script>
+
+/* ======================================
+   EASY SETTINGS — EDIT THESE VALUES
+====================================== */
+
+const CONFIG = {
+
+  invitationCode: "mt1-arcane",
+
+  memberIDs: {
+    "2026": "0011-n13",
+    "2027": "00221-n13"
+  },
+
+  participantID: "dls500",
+
+  // EDIT DISPLAYED 2026 BALANCE HERE
+  balance2026: 2558822.00,
+
+  // EDIT DISPLAYED 2027 FIGURE HERE
+  balance2027: 30000,
+
+  maxPayout: 30000,
+  minPayout: 100
+
+};
+
+/* ======================================
+   SESSION DATA
+====================================== */
+
+let member = {
+  name: "",
+  email: "",
+  event: "2026"
+};
+
+const $ = id => document.getElementById(id);
+
+function money(value) {
+  return "$" + Number(value).toLocaleString("en-US", {
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
+}
+
+/* LOGIN */
+
+$("loginForm").addEventListener("submit", function(e) {
+
+  e.preventDefault();
+
+  const name = $("loginName").value.trim();
+  const email = $("loginEmail").value.trim();
+  const code = $("inviteCode").value.trim();
+
+  if(code !== CONFIG.invitationCode) {
+    $("loginError").textContent = "Invalid invitation code.";
+    return;
+  }
+
+  member.name = name;
+  member.email = email;
+
+  $("loginScreen").classList.add("hidden");
+  $("walletScreen").classList.remove("hidden");
+
+});
+
+/* MEMBER VERIFICATION */
+
+function verifyMember() {
+
+  const event = $("walletChoice").value;
+  const code = $("memberCode").value.trim();
+
+  if(code !== CONFIG.memberIDs[event]) {
+    $("memberError").textContent =
+      "Member ID not recognized. Please check and try again.";
+    return;
+  }
+
+  member.event = event;
+
+  $("walletScreen").classList.add("hidden");
+  $("dashboardScreen").classList.remove("hidden");
+
+  $("logoutBtn").classList.remove("hidden");
+  $("headerStatus").textContent = "MEMBER ACCESS";
+
+  $("displayName").textContent = member.name;
+
+  updateDashboard();
+
+}
+
+/* DASHBOARD */
+
+function updateDashboard() {
+
+  $("switchWallet").value = member.event;
+
+  $("walletLabel").textContent = "WANHEDA " + member.event;
+
+  if(member.event === "2026") {
+
+    $("event2026").classList.remove("hidden");
+    $("event2027").classList.add("hidden");
+
+    $("balanceDisplay").textContent =
+      money(CONFIG.balance2026);
+
+  } else {
+
+    $("event2026").classList.add("hidden");
+    $("event2027").classList.remove("hidden");
+
+  }
+
+}
+
+function switchEvent() {
+
+  const event = $("switchWallet").value;
+
+  // Require member ID verification when switching events.
+  const id = prompt("Enter your member ID to access this event:");
+
+  if(id !== CONFIG.memberIDs[event]) {
+    alert("Member ID verification failed.");
+    $("switchWallet").value = member.event;
+    return;
+  }
+
+  member.event = event;
+  updateDashboard();
+
+}
+
+/* PAYOUT SCREEN */
+
+function openPayout() {
+
+  $("dashboardScreen").classList.add("hidden");
+  $("payoutScreen").classList.remove("hidden");
+
+  $("payoutName").value = member.name;
+  $("payoutEmail").value = member.email;
+  $("payoutMember").value = CONFIG.memberIDs[member.event];
+  $("participantId").value = CONFIG.participantID;
+
+  $("payoutFormCard").classList.remove("hidden");
+  $("successCard").classList.add("hidden");
+
+  window.scrollTo(0,0);
+
+}
+
+function closePayout() {
+
+  $("payoutScreen").classList.add("hidden");
+  $("dashboardScreen").classList.remove("hidden");
+
+  window.scrollTo(0,0);
+
+}
+
+/* PAYOUT SUBMISSION */
+
+$("payoutForm").addEventListener("submit", function(e) {
+
+  e.preventDefault();
+
+  const name = $("payoutName").value.trim();
+  const email = $("payoutEmail").value.trim();
+  const memberID = $("payoutMember").value.trim();
+  const participant = $("participantId").value.trim();
+  const amount = Number($("payoutAmount").value);
+  const method = $("withdrawalMethod").value;
+  const address = $("withdrawalAddress").value.trim();
+
+  const error = $("payoutError");
+
+  error.textContent = "";
+
+  if(memberID !== CONFIG.memberIDs[member.event]) {
+    error.textContent = "Member ID verification failed.";
+    return;
+  }
+
+  if(participant !== CONFIG.participantID) {
+    error.textContent = "Participant ID verification failed.";
+    return;
+  }
+
+  if(!Number.isFinite(amount) ||
+     amount < CONFIG.minPayout ||
+     amount > CONFIG.maxPayout) {
+
+    error.textContent =
+      "Amount must be between $100 and $30,000.";
+
+    return;
+  }
+
+  if(!method || !address || !name || !email) {
+    error.textContent = "Please complete all fields.";
+    return;
+  }
+
+  // This is a local demonstration only.
+  // No actual payout request is transmitted or processed.
+
+  $("successName").textContent = name;
+  $("successAmount").textContent = money(amount);
+  $("successMethod").textContent = method;
+
+  $("payoutFormCard").classList.add("hidden");
+  $("successCard").classList.remove("hidden");
+
+});
+
+/* LOGOUT */
+
+function logout() {
+
+  member = {
+    name:"",
+    email:"",
+    event:"2026"
+  };
+
+  $("dashboardScreen").classList.add("hidden");
+  $("payoutScreen").classList.add("hidden");
+  $("walletScreen").classList.add("hidden");
+
+  $("loginScreen").classList.remove("hidden");
+
+  $("logoutBtn").classList.add("hidden");
+  $("headerStatus").textContent = "MEMBERS ONLY";
+
+  $("loginForm").reset();
+  $("memberCode").value = "";
+
+  window.scrollTo(0,0);
+
+}
+
+</script>
+</body>
+</html>
